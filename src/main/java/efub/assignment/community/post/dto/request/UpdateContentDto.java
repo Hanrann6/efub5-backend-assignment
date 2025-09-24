@@ -7,4 +7,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class UpdateContentDto {
     private String content;
+
+    public void setContent(String content) {
+        this.content = content;
+    }
 }
