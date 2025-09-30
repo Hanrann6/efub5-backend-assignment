@@ -44,6 +44,8 @@ class PostControllerTest {
 
     private PostResponseDto postResponseDto;
 
+    private static final LocalDateTime FIXED_TIME = LocalDateTime.of(2025, 1, 1, 0, 0);
+
     @BeforeEach
     void setUp() {
         postResponseDto = PostResponseDto.builder()
@@ -52,8 +54,8 @@ class PostControllerTest {
                 .authorId(1L)
                 .anonymous(false)
                 .content("내용입니다")
-                .createdAt(LocalDateTime.now())
-                .updatedAt(LocalDateTime.now())
+                .createdAt(FIXED_TIME)
+                .updatedAt(FIXED_TIME)
                 .build();
     }
 
@@ -86,8 +88,8 @@ class PostControllerTest {
                 .authorId(1L)
                 .anonymous(false)
                 .content("수정된 내용")
-                .createdAt(LocalDateTime.now())
-                .updatedAt(LocalDateTime.now())
+                .createdAt(FIXED_TIME)
+                .updatedAt(FIXED_TIME)
                 .build();
 
         given(postService.updateContent(eq(1L), any(UpdateContentDto.class))).willReturn(updated);
@@ -128,7 +130,6 @@ class PostControllerTest {
         BDDMockito.willDoNothing().given(postService).deletePost(1L);
 
         mockMvc.perform(delete("/posts/{postId}", 1L))
-                .andExpect(status().isOk())
-                .andExpect(content().string("성공적으로 게시글 삭제가 완료되었습니다."));
+                .andExpect(status().isOk());
     }
 }

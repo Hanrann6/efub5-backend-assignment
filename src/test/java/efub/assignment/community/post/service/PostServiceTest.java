@@ -48,15 +48,6 @@ class PostServiceTest {
     void setUp() {
         MockitoAnnotations.openMocks(this);
 
-        board = Board.builder()
-                .owner(author)
-                .name("test 게시판")
-                .description("테스트 설명")
-                .notice("공지")
-                .build();
-
-        ReflectionTestUtils.setField(board, "boardId", 1L);
-
         author = Member.builder()
                 .studentId("2025")
                 .university("Ewha")
@@ -66,6 +57,15 @@ class PostServiceTest {
                 .build();
 
         ReflectionTestUtils.setField(author, "memberId", 1L);
+
+        board = Board.builder()
+                .owner(author)
+                .name("test 게시판")
+                .description("테스트 설명")
+                .notice("공지")
+                .build();
+
+        ReflectionTestUtils.setField(board, "boardId", 1L);
 
         post = Post.builder()
                 .postId(1L)
