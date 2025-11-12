@@ -9,6 +9,9 @@ import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 @RequiredArgsConstructor
 public class MemberService {
@@ -48,6 +51,16 @@ public class MemberService {
         member.updateNickname(memberRequestDto.getNickname());
         Member savedMember = memberRepository.save(member);
         return MemberResponseDto.from(savedMember);
+    }
+
+    // 닉네임으로 회원 조회
+    @Transactional(readOnly = true)
+    public List<MemberResponseDto> getMembersByNickname(String nickname) {
+        List<Member> members = memberRepository.findMembersByNickname(nickname);
+
+        return members.stream()
+                .map(MemberResponseDto::from)
+                .collect(Collectors.toList());
     }
 
     @Transactional

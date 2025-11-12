@@ -11,6 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/members")
 @RequiredArgsConstructor
@@ -39,6 +41,14 @@ public class MemberController {
                                                             @PathVariable("memberId") Long memberId) {
         MemberResponseDto memberResponseDto = memberService.updateMember(memberId, memberRequestDto);
         return ResponseEntity.status(HttpStatus.OK).body(memberResponseDto);
+    }
+
+    // 닉네임으로 회원 조회
+    @GetMapping("/search")
+    public ResponseEntity<List<MemberResponseDto>> searchMember(@RequestParam String nickname) {
+
+        List<MemberResponseDto> members = memberService.getMembersByNickname(nickname);
+        return ResponseEntity.ok(members);
     }
 
     // 회원 탈퇴 (상태 변경) PATCH /members/{memberId}
